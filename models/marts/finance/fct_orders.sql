@@ -8,23 +8,22 @@ payments as (
 
 order_payments as (
     select
-        order_id,
+        orderid as order_id,
         sum (case when status = 'success' then amount end) as amount
 
-    from payments
+    from {{source('stripe','payment')}}
     group by 1
 ),
 
  final as (
 
     select
-        orders.order_id,
-        orders.customer_id,
-        orders.order_date,
+        orders.order_id as order_id,
+        orders.customer_id as customer_id,
+        orders.ORDERED_AT as order_date,
         coalesce (order_payments.amount, 0) as amount
 
     from orders
     left join order_payments using (order_id)
 )
-
 select * from final
