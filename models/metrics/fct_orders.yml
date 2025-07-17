@@ -1,0 +1,10 @@
+entities:
+  - name: order_id
+    type: primary
+dimensions:
+  - name: is_drink_order
+    type: categorical
+measures:
+  - name: min_order_value
+    agg: min
+    expr: order_total 
