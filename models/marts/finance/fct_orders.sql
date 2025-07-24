@@ -34,7 +34,8 @@
 
 {{
     config(
-        materialized='incremental'
+        materialized='incremental',
+        incremental_strategy = 'merge'
     )
 }}
 with orders as  (
